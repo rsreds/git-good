@@ -1,0 +1,13 @@
+#! /bin/bash
+
+format=$(type -p clang-format)
+if [ -z "$format" ]; then
+    echo -n \ $'You need to install clang-format.' \ >&2
+fi
+
+git diff --cached --name-only --diff-filter=ACM | grep -E "\.(c|cpp|h|hpp)$" | xargs $format --dry-run --Werror
+
+if [ $? -ne 0 ]; then
+    echo \ $'Code style issues found. Please format your code with clang-format.' \ >&2
+    exit 1
+fi
