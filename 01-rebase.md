@@ -54,7 +54,7 @@ Can you find out where the `display` branch first branched from main?
 >The two branches diverged after the commit:
 >
 >```text
->* 81ba2ab Add daisies spreading step
+>* e172778 Add daisies spreading step
 >```
 >
 >You can find this out by comparing the commit history of the two branches.
@@ -69,12 +69,12 @@ Can you find out where the `display` branch first branched from main?
 >
 >```text
 >...
->* f37ebaf Add print method to World
->* ceedb39 Add ostream operator
->| * bbff9d4 (origin/main, origin/HEAD, main) Add simulation steps
+>* 6b8ed49 Add print method to World
+>* 454ed2e Add ostream operator
+>| * 5cae577 (main) Add simulation steps
 >|/
->* 81ba2ab Add daisies spreading step
->* 22dbd28 Add build folder to gitignore and remove it
+>* e172778 Add daisies spreading step
+>* a216c3d Add build folder to gitignore and remove it
 >...
 >```
 >
@@ -108,12 +108,12 @@ If we want to clean up the history of the changes we could *squash* them all tog
 >The commits in question are
 >
 >```text
->c1e670e Add correct print implementation
->e9031f1 Revert "Add print method to World"
->f37ebaf Add print method to World
+>* 9ca1648 Add correct print implementation
+>* acb516e Revert "Add print method to World"
+>* 6b8ed49 Add print method to World
 >```
 >
->Commit `e9031f1` is a revert of commit `f37ebaf`. Commit `c1e670e` implements the correct version of the function.
+>Commit `acb516e` is a revert of commit `6b8ed49`. Commit `9ca1648` implements the correct version of the function.
 >
 ></details>
 
@@ -122,14 +122,14 @@ In addition, some commits are only quick fixes of typos. We could also decide to
 ><details><summary>Reveal solution</summary>
 >
 >```text
->b9675e4 Update README.md
->424f397 Ops, it is under
->4684631 Add sample output to README.md
+>* 21bc547 Update README.md
+>* d30c784 Ops, it is under
+>* 8456bf8 Add sample output to README.md
 >```
 >
->Commit `4684631` adds some content to the README.md file.
->Commit `424f397` simply replace the world above with below.
->Commit `b9675e4` looks like it's written by a different author, probably from the Github user interface. It fixes a spelling mistake and adds a new line at the end of the file (notice how that is signalled in the *diff*).
+>Commit `8456bf8` adds some content to the README.md file.
+>Commit `d30c784` simply replace the world above with below.
+>Commit `21bc547` looks like it's written by a different author, probably from the Github user interface. It fixes a spelling mistake and adds a new line at the end of the file (notice how that is signalled in the *diff*).
 >
 >These three commands can all be squashed togheter.
 >
@@ -139,7 +139,7 @@ Finally, a different commit make a very small change to a part of the code that 
 
 ><details><summary>Reveal solution</summary>
 >
->Commit `e4e908d` replace the character used in commit `ceedb39` with emojis.
+>Commit `c04fb10` replace the character used in commit `454ed2e` with emojis.
 >
 ></details>
 
@@ -150,7 +150,7 @@ In writing the todo list, consider which commit message to keep, and which to re
 >We can run the interactive rebase with:
 >
 >```bash
->git rebase -i 81ba2ab
+>git rebase -i e172778
 >```
 >
 >We know the commit from which `display` branched from `main`. We can also use `ceedb39^`, which refers to the parent of the first commit of the `display` branch.
@@ -158,24 +158,24 @@ In writing the todo list, consider which commit message to keep, and which to re
 >The todo list can be set up as follows:
 >
 >```text
->pick ceedb39 Add ostream operator
->squash e4e908d Replace with emoji
->drop f37ebaf Add print method to World
->drop e9031f1 Revert "Add print method to World"
->reword c1e670e Add correct print implementation
->pick 1bca4f6 Add print to main function
->squash 966dc56 Add useful comment
->pick 4684631 Add sample output to README.md
->fixup 424f397 Ops, it is under
->fixup b9675e4 Update README.md
->pick 039ce60 Specify bash in code snippets
+>pick 454ed2e Add ostream operator
+>squash c04fb10 Replace with emoji
+>drop 6b8ed49 Add print method to World
+>drop acb516e Revert "Add print method to World"
+>reword 9ca1648 Add correct print implementation
+>pick 616ae5a Add print to main function
+>squash cc1de4a Add useful comment
+>pick 8456bf8 Add sample output to README.md
+>fixup d30c784 Ops, it is under
+>fixup 21bc547 Update README.md
+>pick 8e55672 Specify bash in code snippets
 >```
 >
->Commit `e4e908d` has been move forward up into the stack, and set to `squash`, to be melded in the first commit.  
->Commits `f37ebaf` and `e9031f1` have been dropped, since the second is a revert of the first.  
->Commit `c1e670e` is now the only implementation of the print function, so it can be maintained but the commit message can be slightly altered to reflect the change.  
->Commit `966dc56` can be squashed with the previous, since the change it implements is minimal, and could have easily been an *amend*.  
-> Commits `424f397` and `b9675e4` are marked as fixup, since they implement very small changes and there is no need to modify the original commit message.
+>Commit `c04fb10` has been move forward up into the stack, and set to `squash`, to be melded in the first commit.  
+>Commits `6b8ed49` and `acb516e` have been dropped, since the second is a revert of the first.  
+>Commit `9ca1648` is now the only implementation of the print function, so it can be maintained but the commit message can be slightly altered to reflect the change.  
+>Commit `cc1de4a` can be squashed with the previous, since the change it implements is minimal, and could have easily been an *amend*.  
+> Commits `d30c784` and `21bc547` are marked as fixup, since they implement very small changes and there is no need to modify the original commit message.
 ></details>
 
 ## Pushing changes
