@@ -141,6 +141,14 @@ Finally, a different commit make a very small change to a part of the code that 
 >
 >Commit `c04fb10` replace the character used in commit `454ed2e` with emojis.
 >
+>By using switch to move to the previous commit we can see the difference `c04fb10` makes in excecution.
+>
+>```bash
+>git switch --detach c04fb10~
+>```
+>
+>See the `README.md` in the repository for istruction on how to compile and run the simulation.
+>
 ></details>
 
 We can do all these changes with a single run of interactive rebase.
