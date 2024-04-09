@@ -13,25 +13,25 @@ We can use git log to see the history graph.
 ><details><summary>Reveal solution</summary>
 >
 >```bash
->git log --oneline --graph --all</code>
+>git log --oneline --graph --all
 >```
 >
 >```text
->* 63a1d41 (HEAD -> main) Specify bash in code snippets
->* bbff9d4 Add simulation steps
->| * ba80000 (display) Add sample output to README.md
->| * e69a7c7 Add print to main function
->| * 6e42d59 Add print implementation
->| * 967c2bb Add ostream operator
+>* 2041b46 (HEAD -> main) Specify bash in code snippets
+>* 5cae577 Add simulation steps
+>| * 35a9bc3 (display) Add sample output to README.md
+>| * c1e7262 Add print to main function
+>| * dc31246 Add print implementation
+>| * 3b94196 Add ostream operator
 >|/
->* 81ba2ab Add daisies spreading step
->* 22dbd28 Add build folder to gitignore and remove it
->* c7f30f6 Implement temperatures diffusion
->* 37eedd6 Add compilation instructions to README.md
->* 54fc8c9 Add Cmake configuration
->* 2d2c7d3 Implement local heating due to Albedo
->* 3be66b1 Initial implementation of World and Daisy
->* fc27fb5 Add initial daisyworld description
+>* e172778 Add daisies spreading step
+>* a216c3d Add build folder to gitignore and remove it
+>* c8f0106 Implement temperatures diffusion
+>* b22b02e Add compilation instructions to README.md
+>* bd41f7f Add Cmake configuration
+>* 764b5d5 Implement local heating due to Albedo
+>* 062a8b0 Initial implementation of World and Daisy
+>* a8343bd Add initial daisyworld description
 >* bc4105a Initial implementation of cpp project
 >* 491484f Initial commit
 >```
@@ -143,11 +143,13 @@ Using the tool at your disposal try to split the incriminating commit. You shoul
 >git reset --mixed HEAD~
 >```
 >
->We can explore the changes using
+>We can explore the changes to tracked files using:
 >
 >```bash
 >git diff
 >```
+>
+>This will not show the new files added, but you can see them listed with `git status`
 >
 >We now stage and commit the changes that we want to add to the first commit:
 >
@@ -160,7 +162,7 @@ Using the tool at your disposal try to split the incriminating commit. You shoul
 >
 >```bash
 >git add world.cpp world.hpp main.cpp
->git commit -m "Add initial implementation of World
+>git commit -m "Add initial implementation of World"
 >```
 >
 >We are now ready to finish the rebase:
