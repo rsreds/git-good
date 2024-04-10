@@ -2,7 +2,7 @@
 
 These exercises will focus on the use of the admin tools shown during the lecture.
 
-In particular the first exercise will ask you to use the `filter-repo` tool to alter the history of the repository, while the second exercise will delve into git hooks.
+In particular the first exercise will ask you to use the `git-filter-repo` tool to alter the history of the repository, while the second exercise will delve into git hooks.
 
 ## Analyze the content of the repository
 
@@ -74,7 +74,7 @@ You can use `git-filter-repo` to analyze the content of the repository in more d
 
 ## Remove large files from the repository
 
-We could remove the `build/` folder with a `rebase` on main. However this could prove to be complex even in this simple example, as the build folder is present in multiple commits, it's content changes in more than one commmit, and it gets added and removed in commits that contain other code changes. So we cannot simply drop these commits.
+We could remove the `build/` folder with a `rebase` on main. However this could prove to be complex even in this simple example, as the build folder is present in multiple commits, its content changes in more than one commmit, and it gets added and removed in commits that contain other code changes. So we cannot simply drop these commits.
 
 While a solution is possibile, in this case it's probably faster, easier and safer to use `git-filter-repo`, as we will still end up drastically changing the history.
 
@@ -98,7 +98,7 @@ Use `git-filter-repo` to remove the `build/` folder from the repository.
 >
 >If we now rerun the analyze, we will see that indeed the build folder is no longer in the repository.
 >
->However, if we check the logs we can see that one of the commits still reference the build folder. However from it's diff we can see that it doesn't any longer affect it:
+>However, if we check the logs we can see that one of the commits still reference the build folder. However from its diff we can see that it doesn't any longer affect it:
 >
 >```bash
 >git log -p 2f0302 -1

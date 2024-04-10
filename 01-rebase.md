@@ -10,7 +10,7 @@ Optionally, you can try using `stash` in conjunction with `reset` to move part o
 
 ## Explore the repository
 
-Take some time to explore the repository and it's commits. If you want, you can try to understand what the code does but it's not necessary for the excercise.
+Take some time to explore the repository and its commits. If you want, you can try to understand what the code does but it's not necessary for the excercise.
 
 List the branch that exist in the repository.
 
