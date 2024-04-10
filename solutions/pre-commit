@@ -1,13 +1,67 @@
-#! /bin/bash
+#!/bin/sh
+#
+checkForBinaries() {
+    binaryFilesCount=0
+    for file in $(git diff --cached --name-only --diff-filter=d) ; do 
+        binaryFlag=
+        if [ ! -z "$(file --mime-encoding ${file} | grep binary)" ] ; then
+            binaryFiles="${binaryFiles}\n$file"
+        fi
+    done
+	if [ ! -z "${binaryFiles}" ] ; then
+        printf "\nFound binary files: \n\t"
+        printf "\033[33m${binaryFiles}\033[0m \n\n"
+        printf "Commit aborted. Fore more details look at .git/hooks/pre-commit\n"
+        exit 1
+    fi
+}
 
-format=$(type -p clang-format)
-if [ -z "$format" ]; then
-    echo -n \ $'You need to install clang-format.' \ >&2
+
+if git rev-parse --verify HEAD >/dev/null 2>&1
+then
+	against=HEAD
+else
+	# Initial commit: diff against an empty tree object
+	against=$(git hash-object -t tree /dev/null)
 fi
 
-git diff --cached --name-only --diff-filter=ACM | grep -E "\.(c|cpp|h|hpp)$" | xargs $format --dry-run --Werror
+# If you want to allow non-ASCII filenames set this variable to true.
+allownonascii=$(git config --type=bool hooks.allownonascii)
 
-if [ $? -ne 0 ]; then
-    echo \ $'Code style issues found. Please format your code with clang-format.' \ >&2
-    exit 1
+# If you want to allow binary files set this variable to true.
+allowbinary=$(git config --type=bool hooks.allowbinary)
+# Redirect output to stderr.
+exec 1>&2
+
+#Check for binary files in the commit
+if [ "$allowbinary" != "true" ]
+then
+    checkForBinaries
 fi
+
+# Cross platform projects tend to avoid non-ASCII filenames; prevent
+# them from being added to the repository. We exploit the fact that the
+# printable range starts at the space character and ends with tilde.
+if [ "$allownonascii" != "true" ] &&
+	# Note that the use of brackets around a tr range is ok here, (it's
+	# even required, for portability to Solaris 10's /usr/bin/tr), since
+	# the square bracket bytes happen to fall in the designated range.
+	test $(git diff --cached --name-only --diff-filter=A -z $against |
+	  LC_ALL=C tr -d '[ -~]\0' | wc -c) != 0
+then
+	cat <<\EOF
+Error: Attempt to add a non-ASCII file name.
+
+This can cause problems if you want to work with people on other platforms.
+
+To be portable it is advisable to rename the file.
+
+If you know what you are doing you can disable this check using:
+
+  git config hooks.allownonascii true
+EOF
+	exit 1
+fi
+
+# If there are whitespace errors, print the offending file names and fail.
+exec git diff-index --check --cached $against --

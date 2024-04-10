@@ -163,4 +163,107 @@ The hook should check before a commit that the committed files are non-binary an
 >:warning: While this prevents to commit for example the excecutable generated during compilation, it doesn't prevent to commit the numerous files that CMake writes in the build folder.  
 For the puropse of this excercise it will be fine for us, but the solution is not easy. It's probably better to just educate the user :)
 
+When you initialize a repository, git will add some sample hook in the `.git/hook` folder.
 
+Find which hook to modify to perform the check.
+
+><details><summary>Reveal solution</summary>
+>
+>The list of sample hooks is pretty big:
+>
+>```bash
+>ls .git/hooks/
+>applypatch-msg.sample   post-update.sample  pre-merge-commit.sample pre-receive.sample  update.sample
+>commit-msg.sample   pre-applypatch.sample   pre-push.sample prepare-commit-msg.sample
+>fsmonitor-watchman.sample   pre-commit.sample   pre-rebase.sample   push-to-checkout.sample
+>```
+>
+>The one that interests us is the `pre-commit` hook.
+>
+></details>
+
+The sample commit presents a way to check that new files committed are not named with non-ascii character.
+Try to understand what the different lines of the script do:
+
+- L1
+- L10:16
+- L19
+- L31:23
+
+><details><summary>Reveal solution</summary>
+>
+>- L1  
+>Contains the *[shabang](https://en.wikipedia.org/wiki/Shebang_(Unix))* necessary to set the file as executable using the shell.
+>- L10:16  
+>The `--verify` option for `rev-parse` checks that exactly one reference to an object exists. In this case is used to check if *HEAD* refers to something.  
+>Indeed in an empty repository we saw in the lectures that *HEAD* points to a *head* that still is not accessible.  
+>It set the `against` variable to an empty tree object in that case.
+>- L19  
+>git allows for custom configuration options, that can be easily created and referred in any moment. Non existing options will return exit code 1.
+>- L31:32  
+>The `diff` command list the name of the files (`--name-only`) that have been added(`--diff-filter=A`) to the staging area (`--cached`).  
+>The `--diff-filter` accepts [various options](https://git-scm.com/docs/git-diff#Documentation/git-diff.txt---diff-filterACDMRTUXB82308203).  
+>`-z` is used to qoute pathnames with unusual characters; and `$against` is the commit against which the diff is being made.  
+>`LC_ALL=C tr -d '[ -~]\0'` removes all ASCII printable characters and null characters from the input and `wc -c` counts the remaining ones.  
+>If the command returns non-zero, `test` will exit with an error code.
+>
+></details>
+
+Let's alter the hook to check for binary files.
+One way to do it is to use:
+
+```bash
+file --mime-encodig ${filename} | grep binary
+```
+
+The `file` command determines the filetype; with `--mime-encoding` option it output the *mime* encoding type string, for example `us-ascii` or `binary`.
+
+><details><summary>Reveal solution</summary>
+>A possible function to check if the file are not binary is:
+>
+>```bash
+>checkForBinaries() {
+>    binaryFilesCount=0
+>    for file in $(git diff --cached --name-only --diff-filter=d) ; do 
+>        binaryFlag=
+>        if [ ! -z "$(file --mime-encoding ${file} | grep binary)" ] ; then
+>            printf "Commit aborted. Found binary file.\n"
+>            exit 1
+>        fi
+>    done
+>}
+>```
+>
+>We can now add this function and a call to it to the existing `pre-commit.sample`.
+>
+></details>
+
+Finally make sure that the hook will run and test it by trying to commit for example the daisyworld executable.
+
+><details><summary>Reveal solution</summary>
+>
+>The sample hook must first be renamed to `pre-commit`, then set as executable.
+>
+>```bash
+>mv .git/hooks/pre-commit.sample .git/hooks/pre-commit
+>chmod +x .git/hooks/pre-commit
+>```
+>
+>We can now test it:
+>
+>```bash
+>git add -f build/daisyworld
+>git commit
+>```
+>
+>We will have to use the `-f` option to add to bypass the `.gitignore` when adding files from the build folder.  
+>
+>If everything worked correctly we will have an output like this and the commit will not go through:
+>
+>```text
+>Commit aborted. Found binary file.
+>```
+>
+></details>
+
+The solutions folder presents a possible completed pre-commit hook. 
