@@ -146,10 +146,12 @@ Once it run, `git-filter-repo` will remove any remote ref.
 You will have to add it back before pushing your changes.
 
 ><details><summary>Reveal solution</summary>
+>
 >```bash
 >git remote add origin git@github.com:<username>/git-good-daisyworld.git
 >git push -u --force-with-lease origin main
 >```
+>
 ></details>
 
 ## (Optional) Write a pre-commit hook
