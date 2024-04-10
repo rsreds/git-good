@@ -52,7 +52,7 @@ We can do that simply with rebase.
 >
 >We will incur on a merge conflict. Let's deal with this by fixing the conflicting part of the code, than continue with the rebase.
 >
-> >! A conflict is marked as solved when all the `<<<<<<<`, `=======`, and `>>>>>>>` markers are removed.
+> >:warning: A conflict is marked as solved when all the `<<<<<<<`, `=======`, and `>>>>>>>` markers are removed.
 >
 >A possible implementation of the `main.cpp` that fix the conflict is available in [solutions](/solutions/main.cpp)
 >
@@ -171,7 +171,7 @@ Using the tool at your disposal try to split the incriminating commit. You shoul
 >git reabse --continue
 >```
 >
->>! If we have run the daisyworld simulation before, we could find in our repository a `build/` folder that we should not add to the repository.  
+>>:warning: If we have run the daisyworld simulation before, we could find in our repository a `build/` folder that we should not add to the repository.  
 >>However you may notice that the build/ directory was not yet added to the `.gitignore` file.  
 >>For now, simply remove it to allow the rebase to continue without errors.
 >

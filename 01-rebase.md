@@ -1,4 +1,4 @@
-# Excercise 1: Rebase
+# Exercise 1: Rebase
 
 This excercise should familiarize you with the multiple uses of the `rebase` command, as we have seen in the lectures.
 
