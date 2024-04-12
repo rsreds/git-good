@@ -163,7 +163,7 @@ But this doesn't prevent to upload binary files from other sources. We could mit
 The hook should check before a commit that the committed files are non-binary and, in case some of the files are, stop the commit.
 
 >:warning: While this prevents to commit for example the excecutable generated during compilation, it doesn't prevent to commit the numerous files that CMake writes in the build folder.  
-For the puropse of this excercise it will be fine for us, but the solution is not easy. It's probably better to just educate the user :)
+For the puropse of this exercise it will be fine for us, but the solution is not easy. It's probably better to just educate the user :)
 
 When you initialize a repository, git will add some sample hook in the `.git/hook` folder.
 

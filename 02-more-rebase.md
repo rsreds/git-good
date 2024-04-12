@@ -1,6 +1,6 @@
 # Exercise 2: More rebase
 
-This excercise will focus on the rebase command to merge changes back to `main`.
+This exercise will focus on the rebase command to merge changes back to `main`.
 
 Optionally, you can test again your `rebase` knowledge by using it to split a commit in two.
 

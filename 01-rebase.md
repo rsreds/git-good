@@ -1,8 +1,8 @@
 # Exercise 1: Rebase
 
-This excercise should familiarize you with the multiple uses of the `rebase` command, as we have seen in the lectures.
+This exercise should familiarize you with the multiple uses of the `rebase` command, as we have seen in the lectures.
 
-The excerise will ask you to explore the Daisyworld repository and familizarize yourself with its content, in particular the `display` branch.
+The execrise will ask you to explore the Daisyworld repository and familizarize yourself with its content, in particular the `display` branch.
 
 Afterward, you will use `rebase` to clean up the history of the branch, before merging it back into the `main` branch.
 
@@ -10,7 +10,7 @@ Optionally, you can try using `stash` in conjunction with `reset` to move part o
 
 ## Explore the repository
 
-Take some time to explore the repository and its commits. If you want, you can try to understand what the code does but it's not necessary for the excercise.
+Take some time to explore the repository and its commits. If you want, you can try to understand what the code does but it's not necessary for the exercise.
 
 List the branch that exist in the repository.
 
@@ -86,7 +86,7 @@ Some commit contains messages longer than one line, keep these in mind as we wil
 
 ## Clean the history of `display`
 
-The first excercise is to clean up the history of the `display` branch to prepare it for the merge.
+The first exercise is to clean up the history of the `display` branch to prepare it for the merge.
 
 The branch contains multiple commits. You can list all and only the commits in display with a single command.
 
@@ -148,6 +148,12 @@ Finally, a different commit make a very small change to a part of the code that 
 >```
 >
 >See the `README.md` in the repository for istruction on how to compile and run the simulation.
+>
+> >:warning: Make sure to get out of the *detached HEAD* state afterward. You can return to the previous branch with:
+>
+>```bash
+>git switch -
+>```
 >
 ></details>
 
