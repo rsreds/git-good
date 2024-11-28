@@ -63,7 +63,7 @@ You can use `git-filter-repo` to analyze the content of the repository in more d
 >
 >```bash
 >git filter-repo --analyze
->cat .git/filter-repo/analyze/path-all-sizes.txt
+>cat .git/filter-repo/analysis/path-all-sizes.txt
 >```
 >
 >we can see the list of files in the repository, reverse ordered by accumulated packed size.
