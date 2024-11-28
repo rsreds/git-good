@@ -150,10 +150,10 @@ Finally, a different commit make a very small change to a part of the code that 
 >See the `README.md` in the repository for istruction on how to compile and run the simulation.
 >
 > >:warning: Make sure to get out of the *detached HEAD* state afterward. You can return to the previous branch with:
->
->```bash
->git switch -
->```
+> >
+> > ```bash
+> > git switch -
+> > ```
 >
 ></details>
 
